@@ -59,12 +59,12 @@ namespace Les10ON
             {
                 for(int i = 0; i < _list.Count; i++) 
                 {                   
-                    Console.WriteLine("Анкета номер " + (i + 1) + "\nЗвать - " + _list[i].FIO + "\nДолжность - " + _list[i].work + "\n");
+                    Console.WriteLine("\n\tАнкета номер " + (i + 1) + "\nЗвать - " + _list[i].FIO + "\nДолжность - " + _list[i].work + "\n");
                 }
             }
             public void ShowSingle(int num)
             {               
-                    Console.WriteLine("Фамилия: " + _list[num].FIO + " должность: " + _list[num].work);                             
+                    Console.WriteLine("\n\tФамилия: " + _list[num].FIO + " должность: " + _list[num].work);                             
             }
 
 
@@ -75,8 +75,9 @@ namespace Les10ON
                     if (FIO == _list[i].FIO)
                         return i;
                 }
+                Console.WriteLine("\n\tError!");
                 return -1;
-                Console.WriteLine("Error!");
+                
             }
             public int SearchWorc(string work)
             {
@@ -85,11 +86,21 @@ namespace Les10ON
                     if(work == _list[i].work)
                         return i;
                 }
-                return -1;
-                Console.WriteLine("Error!");
+                Console.WriteLine("\n\tError!");
+                return -1;               
             }
 
-            //void DelPiple();
+            public void DelPiple(int num)
+            {
+                for(int i = 0; i < _list.Count; ++i)
+                {
+                    if(i == num)
+                    {
+                        _list.RemoveAt(i);
+                    }
+                   // else Console.WriteLine("\n\tПлохой выбор");
+                }
+            }
         }
 
         static void Main(string[] args)
@@ -161,15 +172,13 @@ namespace Les10ON
             //        }
 
             //}
-            const int addPiple = 1, showPiples = 2, delPiple = 3, searchPiple = 4, logOut = 5;
+            const int addPiple = 1, showPiples = 2, searchPiple =3 ,  delPiple = 4, logOut = 5;
             string FIO, work;
-            God human = new God();
-            
-            
+            God human = new God();                        
             int num = 0;
             while (num!=logOut)
             {
-                Console.Write("\n\n\n\t1:Добавить данные\n\t2:Показать список\n\t3:Удалить сотрудника\n\t4:Выйти из программы\n\tВыбери действие: ");
+                Console.Write("\n\n\n\t1:Добавить данные\n\t2:Показать список\n\t3:Пойск\n\t4:Удалить сотрудника\n\t5:Выход из программы\n\tВыбери действие: ");
                 num = Convert.ToInt32(Console.ReadLine());
                 switch (num)
                 {
@@ -193,7 +202,7 @@ namespace Les10ON
                         }
                         case searchPiple:
                         {
-                            Console.WriteLine("\t1:Пойск по ФИО:\n\t2:Пойск по должности:\n\tВыбери действие: ");
+                            Console.Write("\t1:Пойск по ФИО:\n\t2:Пойск по должности:\n\tВыбери действие: ");
                             int numTmp = Convert.ToInt32(Console.ReadLine());
                             string strTmp = "";
                             if (numTmp == 1) 
@@ -211,7 +220,22 @@ namespace Les10ON
                             else { Console.WriteLine("\tError enter!!!"); }
                             break;
                         }
+                    case logOut:
+                        break;
 
+                    case delPiple:
+                        Console.WriteLine();
+                        human.ShowData();                      
+                        Console.Write("Выбери номер сотрудника для удаления -> ");
+                        num = Convert.ToInt32(Console.ReadLine());
+                        human.DelPiple(num - 1);
+                        Console.WriteLine();
+                        human.ShowData();
+                        Console.ReadKey();
+                        num = 0;
+                        break;
+
+                       
                 }
             }
 
